@@ -25,7 +25,7 @@
   <body class="container-fluid">
     <h1 class="text-center">Homework:</h1>
     <div class="col-md-6 col-md-offset-3">
-      hello!!
+      hello world!!
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
