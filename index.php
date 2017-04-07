@@ -19,9 +19,9 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 
     <script
-  src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
 
   <!-- <script src="jquery-3.2.0.min.js"></script> -->
 
@@ -84,42 +84,35 @@
     </nav>
 
 
-    <div>
+    <!-- <div>
       <a class="btn btn-sm btn-primary" id="hw">Do homework</a>
-    </div>
+    </div> -->
 
 
     <!-- questions are loaded here -->
     <div class="col-md-6 col-md-offset-3" id="homeworkScreen">
       <div class="panel panel-default">
         <div class="panel-body">
-        solve the following equations $$2+x=4$$
+        <p id="questionScreen">
+          solve the following equations $$2+x=4$$
+        </p>
+        <form id="optionsForm" method="POST">
+          <p id="optionsScreen">
+          
+          </p>
+          <button type="submit">Done</button>
+        </form>
+        
+        
         </div>
         <div class="panel-footer">
-          <a class="btn btn-xsm btn-danger">back</a>
-          <a class="btn btn-xsm btn-success pull-right">next</a>
+          <a class="btn btn-xsm btn-danger" id="back">back</a>
+          <a class="btn btn-xsm btn-success pull-right" id="next">next</a>
         </div>
       </div>
     </div>
     <!-- ***************** -->
-    <?php
 
-     $host = "localhost";
-     $user = "root";
-     $pass = "root";
-
-     mysql_connect($host, $user, $pass);
-     mysql_select_db('oreodb');
-
-     $select_questions = "SELECT * FROM bank WHERE id=1";
-
-    $s = mysql_query($select_questions);
-
-    while ($d = mysql_fetch_assoc($s)) {
-      echo $d['text'];
-    }
-
-    ?>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -131,32 +124,36 @@
 
       
       function renderMath() {
-
-        $("body").click(function() {
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+      };
+
+
+      $("#next").click(function() {
+
+          $.post('getQuestions.php', {'questionId' : [3]} , function(data) {
+            // clear screen before appending new question
+            $('#questionScreen').text('');
+            $('#optionsScreen').text('');
+            $('#questionScreen').text($.parseJSON(data).text);
+            $('#optionsScreen').append('<input type=radio name=options value=1 > 1) ' + $.parseJSON(data).options.split(',')[0] + '</input> <br>');
+            $('#optionsScreen').append('<input type=radio name=options value=2 > 2) ' + $.parseJSON(data).options.split(',')[1] + '</input> <br>');
+            $('#optionsScreen').append('<input type=radio name=options value=3 > 3) ' + $.parseJSON(data).options.split(',')[2] + '</input> <br>');
+            $('#optionsScreen').append('<input type=radio name=options value=4 > 4) ' + $.parseJSON(data).options.split(',')[3] + '</input>');
+
+            renderMath();
+
+          });
+          
       });
 
-      }
+      $("#optionsForm").submit(function(event) {
+        alert($('#optionsForm').val());
+        event.preventDefault();
 
-      $("#hw").click(function() {
-        $("#homeworkScreen").;
       });
 
 
-      var bank = {
-        1 : {
-          type : "multiple choice",
-          text : ,
-          options : [1, 2, 3, 4],
-          solution: 2
-        },
-        2 : {
-          type : "multiple choice",
-          text : "solve for x. $$3+x=5$$",
-          options : [1, 2, 3, 4],
-          solution: 2
-        }
-      }
+      
 
 
       
