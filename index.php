@@ -23,6 +23,8 @@
     integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
     crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="questions_db.js"></script>
+
   <!-- <script src="jquery-3.2.0.min.js"></script> -->
 
   </head>
@@ -90,27 +92,30 @@
 
 
     <!-- questions are loaded here -->
+    <form>
     <div class="col-md-6 col-md-offset-3" id="homeworkScreen">
       <div class="panel panel-default">
+      <div class="panel-heading text-center">Assignment</div>
         <div class="panel-body">
         <p id="questionScreen">
-          solve the following equations $$2+x=4$$
+          
         </p>
-        <form id="optionsForm" method="POST">
+        <!-- <form id="optionsForm" method="POST">
           <p id="optionsScreen">
           
           </p>
-          <button type="submit">Done</button>
-        </form>
+          <button id="done" class="btn btn-default" type="submit">Done</button>
+        </form> -->
         
         
         </div>
         <div class="panel-footer">
           <a class="btn btn-xsm btn-danger" id="back">back</a>
-          <a class="btn btn-xsm btn-success pull-right" id="next">next</a>
+          <a class="btn btn-xsm btn-success pull-right" id="sub">submit</a>
         </div>
       </div>
     </div>
+    </form>
     <!-- ***************** -->
 
 
@@ -127,30 +132,127 @@
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
       };
 
+      var hw = [1,4];
 
-      $("#next").click(function() {
 
-          $.post('getQuestions.php', {'questionId' : [3]} , function(data) {
-            // clear screen before appending new question
-            $('#questionScreen').text('');
-            $('#optionsScreen').text('');
-            $('#questionScreen').text($.parseJSON(data).text);
-            $('#optionsScreen').append('<input type=radio name=options value=1 > 1) ' + $.parseJSON(data).options.split(',')[0] + '</input> <br>');
-            $('#optionsScreen').append('<input type=radio name=options value=2 > 2) ' + $.parseJSON(data).options.split(',')[1] + '</input> <br>');
-            $('#optionsScreen').append('<input type=radio name=options value=3 > 3) ' + $.parseJSON(data).options.split(',')[2] + '</input> <br>');
-            $('#optionsScreen').append('<input type=radio name=options value=4 > 4) ' + $.parseJSON(data).options.split(',')[3] + '</input>');
+      for (var i = 0; i < hw.length; i++) {
 
-            renderMath();
+        var q = hw[i]-1;
 
-          });
+        $('#questionScreen').append(questions[q].text);
+
+        if (questions[q].type == 'mc') {
+
+          if (questions[q].options[0] == questions[q].solution) {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 1) ' + questions[q].options[0] + '</input> <br>');
+          }
+          else {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 1) ' + questions[q].options[0] + '</input> <br>');
+          }
+          if (questions[q].options[1] == questions[q].solution) {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 2) ' + questions[q].options[1] + '</input> <br>');
+          }
+          else {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 2) ' + questions[q].options[1] + '</input> <br>');
+          }
+          if (questions[q].options[2] == questions[q].solution) {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 3) ' + questions[q].options[2] + '</input> <br>');
+          }
+          else {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 3) ' + questions[q].options[2] + '</input> <br>');
+          }
+          if (questions[q].options[3] == questions[q].solution) {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 4) ' + questions[q].options[3] + '</input> <br>');
+          }
+          else {
+            $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 4) ' + questions[q].options[3] + '</input> <br>');
+          }
+
+          $("#questionScreen").append('<br> <a class="pull-right btn btn-primary btn-xs" href="' + questions[q].vid + '">hint</a> <br>');
+          $("#questionScreen").append('<hr>');
+
+        }
+
+        renderMath();
+        
+      }
+
+      // var grade = 0;
+      // if ($('input[type=radio]:checked').val()) {
+
+      // }
+
+// get val of radio buttons and sum to get total grade for assignment
+// var grade = [0,1,1,0,1,] --> grade = 3/hm.length *100
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // var ans = $("form").serialize();
+
+      // $("form").submit('gradeHomework.php', ans);
+
+
+
+
+
+
+
+
+
+      // var n = 0;
+      // $('#done').click(function() {
+      //   n += 1;
+      // });
+
+      // $("#next").click(function() {
+      //     $.post('getQuestions.php', {'questionId' : [n]} , function(data) {
+      //       // clear screen before appending new question
+      //       $('#questionScreen').text('');
+      //       $('#optionsScreen').text('');
+      //       $('#questionScreen').text($.parseJSON(data).text);
+      //       if ($.parseJSON(data).type == 'multiple choice') {
+      //         $('#optionsScreen').append('<input type=radio name=options value=1 > 1) ' + $.parseJSON(data).options.split(',')[0] + '</input> <br>');
+      //       $('#optionsScreen').append('<input type=radio name=options value=2 > 2) ' + $.parseJSON(data).options.split(',')[1] + '</input> <br>');
+      //       $('#optionsScreen').append('<input type=radio name=options value=3 > 3) ' + $.parseJSON(data).options.split(',')[2] + '</input> <br>');
+      //       $('#optionsScreen').append('<input type=radio name=options value=4 > 4) ' + $.parseJSON(data).options.split(',')[3] + '</input>');
+      //       }
+
+      //       renderMath();
+
+      //     });
           
-      });
+      // });
 
-      $("#optionsForm").submit(function(event) {
-        alert($('#optionsForm').val());
-        event.preventDefault();
+      // $("#optionsForm").submit(function(event) {
+      //   alert($('#optionsForm').val());
+      //   event.preventDefault();
 
-      });
+      // });
 
 
       
