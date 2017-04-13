@@ -117,6 +117,7 @@
     </div>
     </form>
     <!-- ***************** -->
+    <div id="viewz"></div>
 
 
 
@@ -176,6 +177,35 @@
         renderMath();
         
       }
+
+
+      function getSum(a) {
+        var count = 0;
+
+        for(var i=0; i < a.length; i++) 
+        { 
+          count += Number(a[i]); 
+        }
+        return count;
+      }
+
+
+
+      // gets values of all checked radios and sums it up
+      $('#sub').click(function() {
+
+        var answers = [];
+
+        for (var i = 0; i < hw.length; i++) {
+        var q = hw[i]-1;
+        var v = $('input[name=options_'+ q +']:checked').val();
+        answers.push(v);
+       }
+
+       $('#viewz').append('Grade: ' + getSum(answers)/answers.length*100 + '%');
+       $('#sub').addClass("disabled");
+
+      });
 
       // var grade = 0;
       // if ($('input[type=radio]:checked').val()) {
