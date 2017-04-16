@@ -232,9 +232,7 @@
         }
 
         var info = $('form').serialize() + '&grade=' + grade;
-        $.post('submittedAssignment.php', info, function(data){
-          alert(data);
-        });
+        $.post('submittedAssignment.php', info);
 
       });
 
