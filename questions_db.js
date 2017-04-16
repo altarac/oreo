@@ -6,8 +6,8 @@ var questions = [
 	text : 'solve for x. $$2+x=4$$',
 	options : [1,2,3,4],
 	solution : 2,
-	video : 'http://www.youtube.com',
-	img : 'none'
+	hint : "https://youtu.be/Qyd_v3DGzTM",
+	img : 'you'
 
 },
 {
@@ -17,8 +17,8 @@ var questions = [
 	text : 'solve for x. $$3+x=5$$',
 	options : [1,2,3,4],
 	solution : 2,
-	video : 'http://www.youtube.com',
-	img : 'none'
+	hint : "https://youtu.be/Qyd_v3DGzTM",
+	img : 'bon'
 
 },
 {
@@ -28,8 +28,8 @@ var questions = [
 	text : 'solve for x. $$4+x=6$$',
 	options : [1,2,3,4],
 	solution : 2,
-	video : 'http://www.youtube.com',
-	img : 'none'
+	hint : "https://youtu.be/Qyd_v3DGzTM",
+	img : 'hello'
 
 },
 {
@@ -39,8 +39,8 @@ var questions = [
 	text : 'solve for x. $$2x=10$$',
 	options : [1,5,3,'\\(x+1\\)'],
 	solution : 5,
-	video : 'http://www.youtube.com',
-	img : 'none'
+	hint : 'http://www.google.com',
+	img : 'httl'
 
 },
 
