@@ -1,6 +1,7 @@
 var questions = [
 {
 	id : 1,
+	grade : 9,
 	chapter : 'TBD',
 	type : 'mc',
 	text : 'solve for x. $$2+x=4$$',
@@ -12,6 +13,7 @@ var questions = [
 },
 {
 	id : 2,
+	grade : 9,
 	type : 'mc',
 	chapter : 'TBD',
 	text : 'solve for x. $$3+x=5$$',
@@ -23,6 +25,7 @@ var questions = [
 },
 {
 	id : 3,
+	grade : 9,
 	type : 'mc',
 	chapter : 'TBD',
 	text : 'solve for x. $$4+x=6$$',
@@ -34,6 +37,7 @@ var questions = [
 },
 {
 	id : 4,
+	grade : 9,
 	type : 'mc',
 	chapter : 'TBD',
 	text : 'solve for x. $$2x=10$$',

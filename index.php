@@ -85,6 +85,14 @@
       </div><!-- /.container-fluid -->
     </nav>
 
+<!--     <div>
+      <select>
+        <option>Select assignment</option>
+        <option value="a1">a1</option>
+        <option value="a2">a2</option>
+      </select>
+    </div> -->
+
 
 
     <div class="center-block col-lg-6">
@@ -95,11 +103,11 @@
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon3">First name:</span>
-        <input type="text" name="courseCode" class="form-control">
+        <input type="text" name="fname" class="form-control">
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon3">Last name:</span>
-        <input type="text" name="courseCode" class="form-control">
+        <input type="text" name="lname" class="form-control">
         </div>
       </div>
 
@@ -177,7 +185,7 @@
 
     }
 
-    var link = questions[q].options[4];
+    var link = questions[q].hint;
     $("#questionScreen").append('<br> <a class="hint pull-right btn btn-primary btn-xs" href="' + link + '">hint</a> <br>');
 
       $("#questionScreen").append('<hr>');
@@ -213,17 +221,20 @@
           var v = $('input[name=options_'+ q +']:checked').val();
           answers.push(v);
         }
-
+        var grade = getSum(answers)/answers.length*100;
 
         if (getSum(answers) == NaN) {
           answers =[];
         }
         else {
-          $('#showGrade').append('Grade: ' + getSum(answers)/answers.length*100 + '%');
+          $('#showGrade').append('Grade: ' + grade + '%');
           $('#sub').addClass("disabled");
         }
 
-        
+        var info = $('form').serialize() + '&grade=' + grade;
+        $.post('submittedAssignment.php', info, function(data){
+          alert(data);
+        });
 
       });
 
