@@ -24,6 +24,8 @@
       crossorigin="anonymous"></script>
 
       <script type="text/javascript" src="questions_db.js"></script>
+    <script type="text/javascript" src="users.js"></script>
+
 
       <!-- <script src="jquery-3.2.0.min.js"></script> -->
 
@@ -44,9 +46,10 @@
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" id="navbar">
               <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
               <li><a href="#">Link</a></li>
+              
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -146,13 +149,22 @@
   function renderMath() {
     MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
   };
+  var hw = [];
 
-  var hw = [1,3,4];
+  users.forEach(function(user) {
+    if (user.uname == 'altarac') {
+      for(var key in user.hw)
+        $('#navbar').append('<li><a>' + key + '</a></li>');
+    }
+  });
 
+  
 
   for (var i = 0; i < hw.length; i++) {
 
+    // convet question id to array location
     var q = hw[i]-1;
+    // ------------------------------------
 
     $('#questionScreen').append(questions[q].text);
 
@@ -165,10 +177,11 @@
     $('#questionScreen').append('<br> <img src="' + image + '" class="img-rounded img-responsive center-block"><br>');
 
     }
+    // ----------------------------------------
 
     var questionType = questions[q].type;
 
-    // check if q is mc and show options
+    // check if q is mc and show options if tf show 2 options
     if (questionType == 'mc') {
 
       if (questions[q].options[0] == questions[q].solution) {
@@ -271,6 +284,8 @@
       function reload() {
         location.reload();
       }
+
+
 
      
 
