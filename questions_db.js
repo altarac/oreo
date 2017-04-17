@@ -8,7 +8,8 @@ var questions = [
 	options : [1,2,3,4],
 	solution : 2,
 	hint : "https://youtu.be/Qyd_v3DGzTM",
-	img : 'you'
+	img : "none",
+	
 
 },
 {
@@ -20,7 +21,8 @@ var questions = [
 	options : [1,2,3,4],
 	solution : 2,
 	hint : "https://youtu.be/Qyd_v3DGzTM",
-	img : 'bon'
+	img : 'none',
+	
 
 },
 {
@@ -32,7 +34,8 @@ var questions = [
 	options : [1,2,3,4],
 	solution : 2,
 	hint : "https://youtu.be/Qyd_v3DGzTM",
-	img : 'hello'
+	img : 'none',
+	
 
 },
 {
@@ -44,7 +47,8 @@ var questions = [
 	options : [1,5,3,'\\(x+1\\)'],
 	solution : 5,
 	hint : 'http://www.google.com',
-	img : 'httl'
+	img : "http://www.onemathematicalcat.org/Math/Geometry_obj/graphics/no_AA_cong.png",
+	
 
 },
 

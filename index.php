@@ -95,7 +95,7 @@
 
 
 
-    <div class="center-block col-lg-6">
+    <div class="col-lg-6 col-lg-offset-3">
       <form>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon3">Course code:</span>
@@ -156,6 +156,16 @@
 
     $('#questionScreen').append(questions[q].text);
 
+
+    // append image only if question has one...
+    if (questions[q].img != 'none') {
+
+    $('#questionScreen').append('<br> <img src="' + questions[q].img + '" class="img-rounded img-responsive center-block"><br>');
+
+    }
+
+
+    // check if q is mc and show options
     if (questions[q].type == 'mc') {
 
       if (questions[q].options[0] == questions[q].solution) {
