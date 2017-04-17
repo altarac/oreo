@@ -27,14 +27,14 @@ var questions = [
 },
 {
 	id : 3,
-	grade : 9,
-	type : 'mc',
+	grade : 10,
+	type : 'tf',
 	chapter : 'TBD',
-	text : 'solve for x. $$4+x=6$$',
-	options : [1,2,3,4],
-	solution : 2,
+	text : 'are the following triangles similar?',
+	options : ['True', 'False'],
+	solution : 'True',
 	hint : "https://youtu.be/Qyd_v3DGzTM",
-	img : 'none',
+	img : "http://www.onemathematicalcat.org/Math/Geometry_obj/graphics/no_AA_cong.png",
 	
 
 },
@@ -47,7 +47,33 @@ var questions = [
 	options : [1,5,3,'\\(x+1\\)'],
 	solution : 5,
 	hint : 'http://www.google.com',
-	img : "http://www.onemathematicalcat.org/Math/Geometry_obj/graphics/no_AA_cong.png",
+	img : 'none',
+	
+
+},
+{
+	id : 5,
+	grade : 9,
+	type : 'mc',
+	chapter : 'TBD',
+	text : 'solve for x. $$2x=10$$',
+	options : [1,5,3,'\\(x+1\\)'],
+	solution : 5,
+	hint : 'http://www.google.com',
+	img : 'none',
+	
+
+},
+{
+	id : 6,
+	grade : 9,
+	type : 'mc',
+	chapter : 'TBD',
+	text : 'solve for x. $$2x=10$$',
+	options : [1,5,3,'\\(x+1\\)'],
+	solution : 5,
+	hint : 'http://www.google.com',
+	img : 'none',
 	
 
 },
