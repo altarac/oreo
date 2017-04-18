@@ -46,9 +46,7 @@
 			</p>
 			</form>
 		</div>
-		<div id="selection" class="panel panel-info col-md-6 col-md-offset-3">
-			
-		</div>
+		
 
 	</div>
     
@@ -69,11 +67,10 @@
 
     	for (var i = 0; i < users.length; i++) {
     		if (uname == users[i].uname && pword == users[i].pword) {
-
-    			// window.location = 'main.php';
-    		} else {
-    			return false;
-    		}
+    			
+    				window.location = 'main.php';
+    				sessionStorage.setItem('u',users[i].uname);
+    			} 
     	}
 
     });

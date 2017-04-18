@@ -24,7 +24,7 @@
       crossorigin="anonymous"></script>
 
       <script type="text/javascript" src="questions_db.js"></script>
-    <script type="text/javascript" src="users.js"></script>
+      <script type="text/javascript" src="users.js"></script>
 
 
       <!-- <script src="jquery-3.2.0.min.js"></script> -->
@@ -41,14 +41,30 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Oreo</a>
+            <a class="navbar-brand" href="index.php">Oreo</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav" id="navbar">
-              <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-              <li><a href="#">Link</a></li>
+            <ul class="nav navbar-nav">
+              
+              <li><a href="#">Help</a></li>
+
+              <li>
+              <a>
+                <form>
+                <!-- <label>Select your assignment</label> -->
+                  <select id="navbar">
+                    <option>Choose assignment</option>
+                  </select>
+                  <button id="fetchAssignment" class="btn btn-default btn-xs">Go</button>
+                </form>
+                
+              </a>
+              </li>
+
+
+              
               
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -69,7 +85,12 @@
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form> -->
-
+          <ul class="nav navbar-nav navbar-right">
+                <li><a id="signedIn">
+                Hi  
+              </a></li>
+              <li><a id="lout" href="#">Log out</a></li>
+              </ul>
 
           <!-- <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Link</a></li>
@@ -88,79 +109,96 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-<!--     <div>
-      <select>
-        <option>Select assignment</option>
-        <option value="a1">a1</option>
-        <option value="a2">a2</option>
-      </select>
-    </div> -->
 
 
 
-    <div class="col-lg-6 col-lg-offset-3">
+   <!--  <div class="col-lg-6 col-lg-offset-3">
       <form>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon3">Course code:</span>
-        <input type="text" name="courseCode" id="courseCode" class="form-control">
+          <input type="text" name="courseCode" id="courseCode" class="form-control">
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon3">First name:</span>
-        <input type="text" name="fname" id="fname" class="form-control">
+          <input type="text" name="fname" id="fname" class="form-control">
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon3">Last name:</span>
-        <input type="text" name="lname" id="lname" class="form-control">
+          <input type="text" name="lname" id="lname" class="form-control">
         </div>
-      </div>
+      </div> -->
 
       <!-- questions are loaded here -->
 
       <div class="col-md-6 col-md-offset-3" id="homeworkScreen">
         <div class="panel panel-default">
-          <div class="panel-heading text-center">Assignment <span id="showGrade" class="text-primary"></span></div>
+          <div class="panel-heading text-center">Assignment <span class="text-primary showGrade"></span></div>
           <div class="panel-body">
             <p id="questionScreen">
-
+              Choose an assignment from the dropdown list
             </p>
-        
-        
+
+
+          </div>
+          <div class="panel-footer">
+            <a onclick="reload()" class="btn btn-xsm btn-danger" id="back">back</a>
+
+            <a class="btn btn-xsm btn-success pull-right showGrade" id="sub">submit</a>
+          </div>
+        </div>
       </div>
-      <div class="panel-footer">
-        <a onclick="reload()" class="btn btn-xsm btn-danger" id="back">back</a>
-        <a class="btn btn-xsm btn-success pull-right" id="sub">submit</a>
-      </div>
-    </div>
-  </div>
-</form>
-<!-- ***************** -->
-<!-- <div id="viewz"></div> -->
+    </form>
+    <!-- ***************** -->
+    <!-- <div id="viewz"></div> -->
 
 
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
-<script type="text/javascript">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
 
 
 
-  function renderMath() {
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-  };
-  var hw = [];
+      function renderMath() {
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+      };
+      var u = sessionStorage.getItem('u');
 
-  users.forEach(function(user) {
-    if (user.uname == 'altarac') {
-      for(var key in user.hw)
-        $('#navbar').append('<li><a>' + key + '</a></li>');
-    }
-  });
+      $('#signedIn').append(u + '!');
 
-  
+      users.forEach(function(user) {
+        if (user.uname == u) {
+          for(var key in user.hw)
+            $('#navbar').append('<option value="' + user.hw[key] + '">' + key + '</option>');
+        }
+      });
 
-  for (var i = 0; i < hw.length; i++) {
+      $('#fetchAssignment').click(function(event) {
+        event.preventDefault();
+        var hw =[];
+        hw = $('#navbar').val().split(",");
+        // $('#fetchAssignment').addClass('disabled');
+        render(hw);
+        return false;
+      });
+
+      
+
+
+
+
+    function render(hw) {
+
+      // clear previous screen
+    $('#questionScreen').html('');
+    
+
+    // ---------------------
+
+
+      for (var i = 0; i < hw.length; i++) {
 
     // convet question id to array location
     var q = hw[i]-1;
@@ -168,13 +206,15 @@
 
     $('#questionScreen').append(questions[q].text);
 
+    
+
 
     // append image only if question has one...
     var image = questions[q].img;
 
     if (image != 'none') {
 
-    $('#questionScreen').append('<br> <img src="' + image + '" class="img-rounded img-responsive center-block"><br>');
+      $('#questionScreen').append('<br> <img src="' + image + '" class="img-rounded img-responsive center-block"><br>');
 
     }
     // ----------------------------------------
@@ -227,37 +267,39 @@
     var link = questions[q].hint;
     $("#questionScreen").append('<br> <a class="hint pull-right btn btn-primary btn-xs" href="' + link + '">hint</a> <br>');
 
-      $("#questionScreen").append('<hr>');
+    $("#questionScreen").append('<hr>');
 
 
     renderMath();
 
   }
+};
 
 
-  function getSum(a) {
-    var count = 0;
+function getSum(a) {
+  var count = 0;
 
-    for(var i=0; i < a.length; i++) 
-    { 
-      count += Number(a[i]); 
-    }
-    
-    return count;
-    
-    
+  for(var i=0; i < a.length; i++) 
+  { 
+    count += Number(a[i]); 
   }
 
+  return count;
+
+
+};
 
 
       // gets values of all checked radios and sums it up
       $('#sub').click(function() {
-        
+        var hw =[];
+        hw = $('#navbar').val().split(",");
+
         // check that input was filled in
         if ($.trim($("#courseCode").val()) === "" || $.trim($("#fname").val()) === "" || $.trim($("#lname").val()) === "") {
-            alert('you did not fill out one of the fields');
-            return false;
-          }
+          alert('you did not fill out one of the fields');
+          return false;
+        }
 
         var answers = [];
 
@@ -272,7 +314,7 @@
           answers =[];
         }
         else {
-          $('#showGrade').append('Grade: ' + grade + '%');
+          $('.showGrade').html('Done. Grade: ' + grade + '%');
           $('#sub').addClass("disabled");
         }
 
@@ -283,11 +325,16 @@
 
       function reload() {
         location.reload();
-      }
+      };
+
+      $('#lout').click(function() {
+        sessionStorage.clear();
+        window.location = 'index.php';
+      });
 
 
 
-     
+
 
 
       
