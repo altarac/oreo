@@ -23,7 +23,7 @@
       integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
       crossorigin="anonymous"></script>
 
-      <script type="text/javascript" src="questions_db.js"></script>
+      <script type="text/javascript" src="questions_db.php"></script>
       <script type="text/javascript" src="users.js"></script>
 
 
@@ -49,6 +49,7 @@
             <ul class="nav navbar-nav">
               
               <li><a href="#">Help</a></li>
+              <li><a href="#">See grades</a></li>
 
               <li>
               <a>
@@ -112,7 +113,7 @@
 
 
 
-   <!--  <div class="col-lg-6 col-lg-offset-3">
+        <div id="id" class="col-lg-6 col-lg-offset-3">
       <form>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon3">Course code:</span>
@@ -126,7 +127,8 @@
           <span class="input-group-addon" id="basic-addon3">Last name:</span>
           <input type="text" name="lname" id="lname" class="form-control">
         </div>
-      </div> -->
+      </div>
+      
 
       <!-- questions are loaded here -->
 
@@ -148,8 +150,11 @@
         </div>
       </div>
     </form>
+
+
+     
     <!-- ***************** -->
-    <!-- <div id="viewz"></div> -->
+    <div id="viewz"></div>
 
 
 
@@ -157,22 +162,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="functions.js"></script>
     <script type="text/javascript">
 
 
+    
+    var u = sessionStorage.getItem('u');
+    var firstName;
+    var lastName;
+    var courseCode; 
 
-      function renderMath() {
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-      };
-      var u = sessionStorage.getItem('u');
 
       $('#signedIn').append(u + '!');
 
       users.forEach(function(user) {
         if (user.uname == u) {
+          $('#fname').val(user.fname);
+          $('#lname').val(user.lname);
+          $('#courseCode').val("demo");
           for(var key in user.hw)
             $('#navbar').append('<option value="' + user.hw[key] + '">' + key + '</option>');
         }
+
       });
 
       $('#fetchAssignment').click(function(event) {
@@ -186,108 +197,7 @@
 
       
 
-
-
-
-    function render(hw) {
-
-      // clear previous screen
-    $('#questionScreen').html('');
     
-
-    // ---------------------
-
-
-      for (var i = 0; i < hw.length; i++) {
-
-    // convet question id to array location
-    var q = hw[i]-1;
-    // ------------------------------------
-
-    $('#questionScreen').append(questions[q].text);
-
-    
-
-
-    // append image only if question has one...
-    var image = questions[q].img;
-
-    if (image != 'none') {
-
-      $('#questionScreen').append('<br> <img src="' + image + '" class="img-rounded img-responsive center-block"><br>');
-
-    }
-    // ----------------------------------------
-
-    var questionType = questions[q].type;
-
-    // check if q is mc and show options if tf show 2 options
-    if (questionType == 'mc') {
-
-      if (questions[q].options[0] == questions[q].solution) {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 1) ' + questions[q].options[0] + '</input> <br>');
-      }
-      else {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 1) ' + questions[q].options[0] + '</input> <br>');
-      }
-      if (questions[q].options[1] == questions[q].solution) {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 2) ' + questions[q].options[1] + '</input> <br>');
-      }
-      else {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 2) ' + questions[q].options[1] + '</input> <br>');
-      }
-      if (questions[q].options[2] == questions[q].solution) {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 3) ' + questions[q].options[2] + '</input> <br>');
-      }
-      else {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 3) ' + questions[q].options[2] + '</input> <br>');
-      }
-      if (questions[q].options[3] == questions[q].solution) {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 4) ' + questions[q].options[3] + '</input> <br>');
-      }
-      else {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 4) ' + questions[q].options[3] + '</input> <br>');
-      }
-
-    } else if (questionType == 'tf') {
-      if (questions[q].options[0] == questions[q].solution) {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 1) ' + questions[q].options[0] + '</input> <br>');
-      }
-      else {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 1) ' + questions[q].options[0] + '</input> <br>');
-      }
-      if (questions[q].options[1] == questions[q].solution) {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=1> 2) ' + questions[q].options[1] + '</input> <br>');
-      }
-      else {
-        $('#questionScreen').append('<input type=radio name=options_' +q+ ' value=0> 2) ' + questions[q].options[1] + '</input> <br>');
-      }
-    }
-
-    var link = questions[q].hint;
-    $("#questionScreen").append('<br> <a class="hint pull-right btn btn-primary btn-xs" href="' + link + '">hint</a> <br>');
-
-    $("#questionScreen").append('<hr>');
-
-
-    renderMath();
-
-  }
-};
-
-
-function getSum(a) {
-  var count = 0;
-
-  for(var i=0; i < a.length; i++) 
-  { 
-    count += Number(a[i]); 
-  }
-
-  return count;
-
-
-};
 
 
       // gets values of all checked radios and sums it up
@@ -323,14 +233,9 @@ function getSum(a) {
 
       });
 
-      function reload() {
-        location.reload();
-      };
 
-      $('#lout').click(function() {
-        sessionStorage.clear();
-        window.location = 'index.php';
-      });
+    $('#id').hide();
+      
 
 
 
