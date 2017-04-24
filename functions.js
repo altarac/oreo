@@ -3,6 +3,13 @@ function renderMath() {
       };
 
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+
     function render(hw) {
 
       // clear previous screen
@@ -107,9 +114,13 @@ function reload() {
         location.reload();
       };
 
-      $('#lout').click(function() {
+function lout() {
         sessionStorage.clear();
         window.location = 'index.php';
+      }
+
+      $('#lout').click(function() {
+        lout();
       });
 
       

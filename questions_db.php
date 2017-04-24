@@ -126,9 +126,6 @@ while ($d = mysql_fetch_assoc($s)) {
 
 
 
-console.log(questions);
-
-
 
 
 

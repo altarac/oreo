@@ -87,7 +87,7 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form> -->
           <ul class="nav navbar-nav navbar-right">
-                <li><a id="signedIn">
+                <li><a id="signedIn" class="navbar-text">
                 Hi  
               </a></li>
               <li><a id="lout" href="#">Log out</a></li>
