@@ -54,6 +54,7 @@
             <ul class="nav navbar-nav">
               <li class="active"><a id="createQuestionTab" href="#">Create New questions<span class="sr-only">(current)</span></a></li>
               <li><a href="#">Create new assignment</a></li>
+              <li><a href="#">Gradebook</a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">
