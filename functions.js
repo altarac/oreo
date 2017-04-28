@@ -119,9 +119,9 @@ function lout() {
         window.location = 'index.php';
       }
 
-      $('#lout').click(function() {
-        lout();
-      });
+$('#lout').click(function() {
+  lout();
+});
 
       
 

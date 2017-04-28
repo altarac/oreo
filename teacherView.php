@@ -53,7 +53,7 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li class="active"><a id="createQuestionTab" href="#">Create New questions<span class="sr-only">(current)</span></a></li>
-              <li><a href="#">Create new assignment</a></li>
+              <li><a id="createNewAssignmentTab" href="#">Create new assignment</a></li>
               <li><a href="#">Gradebook</a></li>
             </ul>
             
@@ -67,57 +67,118 @@
 
       <div id="createQuestionPanel" class="col-md-6 col-md-offset-3">
         <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title text-center">Create a question</h3>
-        </div>
-        <div class="panel-body">
+          <div class="panel-heading">
+            <h3 class="panel-title text-center">Create a question</h3>
+          </div>
+          <div class="panel-body">
 
-        <div id="previewQuestionScreen1">
-          Question goes here.
-        </div>
-        <br>
-        <div>
-          a) <span id="previewSolutionsScreenA">Solutions go here</span> 
-        </div>
-        <div>
-          b) <span id="previewSolutionsScreenB">Solutions go here</span>  
-        </div>
-        <div>
-          c) <span id="previewSolutionsScreenC">Solutions go here</span>
-        </div>
-        <div>
-          d) <span id="previewSolutionsScreenD">Solutions go here</span>
-        </div>
-        <br>
-        <hr>
+            <div class="row">
+              <div id="previewQuestionScreen1" class="col-md-10 col-md-offset-1">
+                Question goes here.
+              </div>
+            </div>
+            <br>
+            <br>
+            <div>
+              a) <span id="previewSolutionsScreenA">Solutions go here</span> 
+            </div>
+            <div>
+              b) <span id="previewSolutionsScreenB">Solutions go here</span>  
+            </div>
+            <div>
+              c) <span id="previewSolutionsScreenC">Solutions go here</span>
+            </div>
+            <div>
+              d) <span id="previewSolutionsScreenD">Solutions go here</span>
+            </div>
+            <br>
+            <hr>
 
 
 
 
-          <form id="createQuestionForm">
-          <label>Question text:</label>
-          <br>
-          <textarea id="questionText" class="col-md-12" name="questionText"></textarea>
-          <br>
-          <label>a) </label> <input type="radio" name="choice"> <input id="A" class="form-control" type="text" name="solutions">
-          <br>
-          <label>b) </label> <input type="radio" name="choice"> <input id="B" class="form-control" type="text" name="solutions">
-          <br>
-          <label>c) </label> <input type="radio" name="choice"> <input id="C" class="form-control" type="text" name="solutions">
-          <br>
-          <label>d) </label> <input type="radio" name="choice"> <input id="D" class="form-control" type="text" name="solutions">
-        </div>
-        <div class="panel-footer">
-          <a class="btn btn-xsm btn-danger" id="back">back</a>
+            <form id="createQuestionForm">
+              <select name="grade" class="form-control">
+                <option>Grade</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+              </select>
+              <br>
+              <label>Question text:</label>
+              <br>
+              <textarea id="questionText" class="col-md-12" name="questionText"></textarea>
+              <br>
+              <label>a) </label> <input class="A" type="radio" name="choice" value=""> <input id="A" class="form-control" type="text" name="solutionA">
+              <br>
+              <label>b) </label> <input class="B" type="radio" name="choice" value=""> <input id="B" class="form-control" type="text" name="solutionB">
+              <br>
+              <label>c) </label> <input class="C" type="radio" name="choice" value=""> <input id="C" class="form-control" type="text" name="solutionC">
+              <br>
+              <label>d) </label> <input class="D" type="radio" name="choice" value=""> <input id="D" class="form-control" type="text" name="solutionD">
+            </div>
+            <div class="panel-footer">
+              <a class="btn btn-xsm btn-danger" id="back">back</a>
 
-          <a class="btn btn-xsm btn-success pull-right showGrade" id="sub">submit</a>
+              <a class="btn btn-xsm btn-success pull-right showGrade" id="submitQuestion">submit</a>
+            </div>
+          </form>
         </div>
-        </form>
       </div>
+
+      <!-- ---------------------------------------------------------------- -->
+
+<form>
+      <div id="createNewAssignmentPanel" class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title text-center">Select questions</h3>
+          </div>
+          <div class="panel-body">
+            
+            <?php
+
+              $host = "localhost";
+              $user = "root";
+              $pass = "root";
+
+              mysql_connect($host, $user, $pass);
+              mysql_select_db('oreodb');
+
+
+
+              $select =  "SELECT * FROM bank";
+
+
+              $s = mysql_query($select);
+
+              while ($d = mysql_fetch_assoc($s)) {
+
+                echo "Grade: " . $d['grade'] . '<br>';
+                echo '<input type="checkbox" name="questions" value="' . $d["id"] . '"> ';
+
+                echo $d['text'];
+                echo '<br>';
+                echo 'Multiple choice options:' . $d['options'];
+                echo '<br><hr>';
+                
+                
+              }
+
+            ?>
+
+
+          </div>
+          <div>
+            <div class="panel-footer">
+              <a class="btn btn-xsm btn-danger" id="back">back</a>
+
+              <a class="btn btn-xsm btn-success pull-right showGrade" id="submitQuestion">submit</a>
+            </div>
       </div>
-
-
-
+</form>
 
 
 
@@ -132,35 +193,45 @@
       <script src="js/bootstrap.min.js"></script>
       <script type="text/javascript">
 
-      $('#createQuestionTab').click(function() {
-        $('#createQuestionPanel').toggle('slow');
-      });
+        $('#createQuestionTab').click(function() {
+          $('#createQuestionPanel').show('slow');
+          $('#createNewAssignmentPanel').hide('slow');
+        });
+
+        $('#createNewAssignmentTab').click(function() {
+          $('#createNewAssignmentPanel').show('slow');
+          $('#createQuestionPanel').hide('slow');
+        });
 
 
-      $('#questionText').keyup(function(){
-        $('#previewQuestionScreen1').html($('#questionText').val());
-        renderMath();
-      });
+        $('#questionText').keyup(function(){
+          $('#previewQuestionScreen1').html($('#questionText').val());
+          renderMath();
+        });
 
-      $('#A').keyup(function(){
-        $('#previewSolutionsScreenA').html($('#A').val());
-        renderMath();
-      });
+        $('#A').keyup(function(){
+          $('#previewSolutionsScreenA').html($('#A').val());
+          $('.A').val($('#A').val());
+          renderMath();
+        });
 
-      $('#B').keyup(function(){
-        $('#previewSolutionsScreenB').html($('#B').val());
-        renderMath();
-      });
+        $('#B').keyup(function(){
+          $('#previewSolutionsScreenB').html($('#B').val());
+          $('.B').val($('#B').val());
+          renderMath();
+        });
 
-      $('#C').keyup(function(){
-        $('#previewSolutionsScreenC').html($('#C').val());
-        renderMath();
-      });
+        $('#C').keyup(function(){
+          $('#previewSolutionsScreenC').html($('#C').val());
+          $('.C').val($('#C').val());
+          renderMath();
+        });
 
-      $('#D').keyup(function(){
-        $('#previewSolutionsScreenD').html($('#D').val());
-        renderMath();
-      });
+        $('#D').keyup(function(){
+          $('#previewSolutionsScreenD').html($('#D').val());
+          $('.D').val($('#D').val());
+          renderMath();
+        });
 
 
 
@@ -175,6 +246,20 @@
           lout();
         });
 
+
+        // $('#back').click(function() {
+        //   console.log($('#createQuestionForm').serialize());
+        // });
+
+        $('#submitQuestion').click(function () {
+          var info = $('#createQuestionForm').serialize();
+          
+          
+          $.post('submitAquestion.php', info, function(data) {
+            alert(data);
+
+          });
+        });
 
 
 
