@@ -1,3 +1,14 @@
+<?php
+
+$host = "localhost";
+$user = "root";
+$pass = "root";
+
+mysql_connect($host, $user, $pass);
+mysql_select_db('oreodb');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,22 +141,26 @@
 
       <!-- ---------------------------------------------------------------- -->
 
-<form>
-      <div id="createNewAssignmentPanel" class="col-md-6 col-md-offset-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title text-center">Select questions</h3>
-          </div>
-          <div class="panel-body">
-            
-            <?php
+      <form id="submitAssignmentForm">
+        <div id="createNewAssignmentPanel" class="col-md-6 col-md-offset-3">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Select questions</h3>
+            </div>
+            <div class="panel-body">
+            <input type="text" name="title" class="form-control" placeholder="Assignment Title">
+              <?php
 
-              $host = "localhost";
-              $user = "root";
-              $pass = "root";
+              $select2 = "SELECT DISTINCT groups FROM usersTable";
+              $s2 = mysql_query($select2);
 
-              mysql_connect($host, $user, $pass);
-              mysql_select_db('oreodb');
+              echo "<label>Choose group: </lable><select class='form-control' name='groups'>";
+              while ($d2 = mysql_fetch_assoc($s2)) {
+                echo "<option value='". $d2['groups'] ."'>" . $d2['groups'] . "</options>";
+              }   
+
+              echo "</select> <br>";        
+
 
 
 
@@ -157,7 +172,7 @@
               while ($d = mysql_fetch_assoc($s)) {
 
                 echo "Grade: " . $d['grade'] . '<br>';
-                echo '<input type="checkbox" name="questions" value="' . $d["id"] . '"> ';
+                echo '<input type="checkbox" name="questions[]" value="' . $d["id"] . '"> ';
 
                 echo $d['text'];
                 echo '<br>';
@@ -167,18 +182,18 @@
                 
               }
 
-            ?>
+              ?>
 
 
-          </div>
-          <div>
-            <div class="panel-footer">
-              <a class="btn btn-xsm btn-danger" id="back">back</a>
-
-              <a class="btn btn-xsm btn-success pull-right showGrade" id="submitQuestion">submit</a>
             </div>
-      </div>
-</form>
+            <div>
+              <div class="panel-footer">
+                <a class="btn btn-xsm btn-danger" id="">back</a>
+
+                <a class="btn btn-xsm btn-success pull-right showGrade" id="submitAssignmentBtn">submit</a>
+              </div>
+            </div>
+          </form>
 
 
 
@@ -187,64 +202,66 @@
 
 
 
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="js/bootstrap.min.js"></script>
-      <script type="text/javascript">
+          <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+          <!-- Include all compiled plugins (below), or include individual files as needed -->
+          <script src="js/bootstrap.min.js"></script>
+          <script type="text/javascript">
 
-        $('#createQuestionTab').click(function() {
-          $('#createQuestionPanel').show('slow');
-          $('#createNewAssignmentPanel').hide('slow');
-        });
+            $('#createNewAssignmentPanel').hide();
 
-        $('#createNewAssignmentTab').click(function() {
-          $('#createNewAssignmentPanel').show('slow');
-          $('#createQuestionPanel').hide('slow');
-        });
+            $('#createQuestionTab').click(function() {
+              $('#createQuestionPanel').show('slow');
+              $('#createNewAssignmentPanel').hide('slow');
+            });
 
-
-        $('#questionText').keyup(function(){
-          $('#previewQuestionScreen1').html($('#questionText').val());
-          renderMath();
-        });
-
-        $('#A').keyup(function(){
-          $('#previewSolutionsScreenA').html($('#A').val());
-          $('.A').val($('#A').val());
-          renderMath();
-        });
-
-        $('#B').keyup(function(){
-          $('#previewSolutionsScreenB').html($('#B').val());
-          $('.B').val($('#B').val());
-          renderMath();
-        });
-
-        $('#C').keyup(function(){
-          $('#previewSolutionsScreenC').html($('#C').val());
-          $('.C').val($('#C').val());
-          renderMath();
-        });
-
-        $('#D').keyup(function(){
-          $('#previewSolutionsScreenD').html($('#D').val());
-          $('.D').val($('#D').val());
-          renderMath();
-        });
+            $('#createNewAssignmentTab').click(function() {
+              $('#createNewAssignmentPanel').show('slow');
+              $('#createQuestionPanel').hide('slow');
+            });
 
 
+            $('#questionText').keyup(function(){
+              $('#previewQuestionScreen1').html($('#questionText').val());
+              renderMath();
+            });
 
-        $('#signedIn').append(u + '!');
+            $('#A').keyup(function(){
+              $('#previewSolutionsScreenA').html($('#A').val());
+              $('.A').val($('#A').val());
+              renderMath();
+            });
 
-        function lout() {
-          sessionStorage.clear();
-          window.location = 'index.php';
-        }
+            $('#B').keyup(function(){
+              $('#previewSolutionsScreenB').html($('#B').val());
+              $('.B').val($('#B').val());
+              renderMath();
+            });
 
-        $('#lout').click(function() {
-          lout();
-        });
+            $('#C').keyup(function(){
+              $('#previewSolutionsScreenC').html($('#C').val());
+              $('.C').val($('#C').val());
+              renderMath();
+            });
+
+            $('#D').keyup(function(){
+              $('#previewSolutionsScreenD').html($('#D').val());
+              $('.D').val($('#D').val());
+              renderMath();
+            });
+
+
+
+            $('#signedIn').append(u + '!');
+
+            function lout() {
+              sessionStorage.clear();
+              window.location = 'index.php';
+            }
+
+            $('#lout').click(function() {
+              lout();
+            });
 
 
         // $('#back').click(function() {
@@ -256,7 +273,17 @@
           
           
           $.post('submitAquestion.php', info, function(data) {
-            alert(data);
+            // alert(data);
+
+          });
+        });
+
+        $('#submitAssignmentBtn').click(function () {
+          var info = $('#submitAssignmentForm').serialize();
+          
+          
+          $.post('createAssignment.php', info, function(data) {
+            // alert(data);
 
           });
         });
